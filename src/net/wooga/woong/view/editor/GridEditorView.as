@@ -57,6 +57,7 @@ package net.wooga.woong.view.editor
 			_toolbar.x = GridInfo.WIDTH * GridInfo.STONE_WIDTH + 100;
 			_graphic.addChild( _toolbar );
 			_toolbar.addEventListener( WoongEvent.EXPORT, handleExport );
+			_toolbar.addEventListener( WoongEvent.OPEN, handleOpen );
 		}
 		
 		public function set stoneModel( modelInstance : StoneModel ) : void
@@ -68,7 +69,18 @@ package net.wooga.woong.view.editor
 		public function loadLevel( xml : XML ) : void
 		{
 			_gridRenderer.removeStones();
-			_gridRenderer.loadLevel( xml );
+			drawStones( GridInfo.LAYER_ONE, new Rectangle( 0, 0, GridInfo.WIDTH, GridInfo.HEIGHT ), 0.1 );
+			drawStones( GridInfo.LAYER_TWO, new Rectangle( 0, 0, GridInfo.WIDTH, GridInfo.HEIGHT ), 0 );
+			drawStones( GridInfo.LAYER_THREE, new Rectangle( 0, 0, GridInfo.WIDTH, GridInfo.HEIGHT ), 0 );
+			drawStones( GridInfo.LAYER_FOUR, new Rectangle( 0, 0, GridInfo.WIDTH, GridInfo.HEIGHT ), 0 );
+			
+			var stone : Stone = new Stone();
+			for each ( var stoneXML : XML in xml.stone )
+			{
+				stone.setup( stoneXML.@index, stoneXML.@type, stoneXML.@layerIndex, stoneXML.@xIndex, stoneXML.@yIndex );
+				_toolbar.selectedStone = stone;
+				onStoneClick( new StoneEvent( StoneEvent.CLICK, stoneXML.@index ) );
+			}
 		}
 		
 		private function drawStones( layerIndex : uint, maxPositions : Rectangle, alpha : Number ) : void
@@ -140,13 +152,16 @@ package net.wooga.woong.view.editor
 					setStoneListeners( stoneAbove, true );
 				}
 			}
-			
-			updateGameplay();
 		}
 		
 		private function handleExport( e : WoongEvent ) : void
 		{
 			System.setClipboard( updateGameplay() );
+		}
+		
+		private function handleOpen( e : WoongEvent ) : void
+		{
+			updateGameplay();
 		}
 		
 		private function updateGameplay() : String

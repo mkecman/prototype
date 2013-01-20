@@ -1,4 +1,5 @@
 package net.wooga.woong.view.gameplay {
+	import net.wooga.woong.message.level.LevelLoaded;
 	import net.wooga.woong.message.level.PlayLevel;
 	import net.wooga.woong.message.view.ViewControl;
 	import net.wooga.woong.model.StoneModel;
@@ -28,10 +29,15 @@ package net.wooga.woong.view.gameplay {
 		}
 		
 		[MessageHandler]
+		public function handleLevelLoaded( message : LevelLoaded ) : void
+		{
+			view.loadLevel( message.xml );
+		}
+		
+		[MessageHandler]
 		public function handleLoadLevel( message : PlayLevel ) : void
 		{
-			if ( view )
-				view.loadLevel( message.xml );
+			view.loadLevel( message.xml );
 		}
 	
 	}

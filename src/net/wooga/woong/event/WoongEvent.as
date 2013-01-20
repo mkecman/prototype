@@ -9,6 +9,7 @@ package net.wooga.woong.event
 	public class WoongEvent extends Event
 	{
 		public static const EXPORT : String = "woongExport";
+		public static const OPEN : String = "woongOpen";
 		
 		public function WoongEvent( type : String )
 		{

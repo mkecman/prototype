@@ -1,5 +1,6 @@
 package net.wooga.woong.view.editor
 {
+	import net.wooga.woong.message.level.LevelLoaded;
 	import net.wooga.woong.message.level.PlayLevel;
 	import net.wooga.woong.message.view.ViewControl;
 	import net.wooga.woong.model.StoneModel;
@@ -25,14 +26,14 @@ package net.wooga.woong.view.editor
 		}
 		
 		[MessageHandler]
-		public function handleLoadLevel( message : PlayLevel ) : void
+		public function handleLoadLevel( message : LevelLoaded ) : void
 		{
 			view.loadLevel( message.xml );
 		}
 		
 		internal function playLevel( xml : XML ) : void
 		{
-			//dispatch( new PlayLevel( xml ) );
+			dispatch( new PlayLevel( xml ) );
 		}
 	}
 

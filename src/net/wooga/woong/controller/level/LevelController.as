@@ -2,12 +2,14 @@ package net.wooga.woong.controller.level
 {
 	import net.wooga.woong.constants.RemoteCallNames;
 	import net.wooga.woong.controller.AbstractController;
+	import net.wooga.woong.message.level.LevelLoaded;
 	import net.wooga.woong.message.level.LoadLevel;
 	import net.wooga.woong.message.level.PlayLevel;
 	import net.wooga.woong.message.service.RemoteCall;
 	import net.wooga.woong.message.view.ViewControl;
 	import net.wooga.woong.model.Level;
 	import net.wooga.woong.model.LevelModel;
+	import net.wooga.woong.view.editor.message.GridEditorViewControl;
 	import net.wooga.woong.view.gameplay.message.GameplayViewControl;
 	import net.wooga.woong.view.mainmenu.message.OpenMainMenuView;
 	
@@ -34,8 +36,8 @@ package net.wooga.woong.controller.level
 			var level : Level = levelModel.getLevel( message.id );
 			if ( level )
 			{
-				dispatch( new PlayLevel( level.xml ) );
-				//dispatch( new OpenMainMenuView( GameplayViewControl, ViewControl.OPEN ) );
+				dispatch( new LevelLoaded( level.xml ) );
+				dispatch( new OpenMainMenuView( GridEditorViewControl, ViewControl.OPEN ) );
 			}
 			else
 			{

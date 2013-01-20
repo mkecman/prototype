@@ -53,6 +53,7 @@ package net.wooga.woong.view.gameplay.grid
 		public function drawEditorStones( layerIndex : uint, maxPositions : Rectangle, alpha : Number ) : void
 		{
 			var index : uint;
+			var stone : Stone;
 			for ( var xIndex : uint = maxPositions.x; xIndex < maxPositions.width; xIndex++ )
 			{
 				for ( var yIndex : uint = maxPositions.y; yIndex < maxPositions.height; yIndex++ )
