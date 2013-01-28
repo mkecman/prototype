@@ -1,7 +1,9 @@
-package net.wooga.woong.message.view {
+package net.wooga.woong.message.view
+{
 	/**
 	 * @author mk
 	 */
-	public class InitializeViewLayers {
+	public class InitializeViewLayers
+	{
 	}
 }

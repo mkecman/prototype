@@ -1,17 +1,13 @@
-package net.wooga.woong.message.view 
+package net.wooga.woong.message.view
 {
 	/**
 	 * ...
 	 * @author ...
 	 */
-	public class InitializeView 
+	public class InitializeView
 	{
-		
-		public function InitializeView() 
+		public function InitializeView()
 		{
-			
 		}
-		
 	}
-
 }

@@ -1,17 +1,13 @@
-package net.wooga.woong.message.core 
+package net.wooga.woong.message.core
 {
 	/**
 	 * ...
 	 * @author ...
 	 */
-	public class InitializeCore 
+	public class InitializeCore
 	{
-		
-		public function InitializeCore() 
+		public function InitializeCore()
 		{
-			
 		}
-		
 	}
-
 }

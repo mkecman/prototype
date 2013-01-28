@@ -1,4 +1,5 @@
-package net.wooga.woong.controller.view {
+package net.wooga.woong.controller.view
+{
 	import net.wooga.woong.constants.LayersNames;
 	import net.wooga.woong.controller.AbstractController;
 	import net.wooga.woong.core.ViewRoot;
@@ -11,19 +12,18 @@ package net.wooga.woong.controller.view {
 	/**
 	 * @author mk
 	 */
-	public class LayerController extends AbstractController {
-		
+	public class LayerController extends AbstractController
+	{
 		[Inject]
 		public var viewRoot : ViewRoot;
-		
 		private var layers : Dictionary;
-		
+
 		[Init]
 		public function init() : void
 		{
 			layers = new Dictionary();
 		}
-		
+
 		[MessageHandler]
 		public function handleInitializeViewLayers( message : InitializeViewLayers ) : void
 		{
@@ -32,7 +32,7 @@ package net.wooga.woong.controller.view {
 			addLayer( LayersNames.GAMEPLAY );
 			addLayer( LayersNames.TOOLBAR );
 		}
-		
+
 		[MessageHandler]
 		public function handleAddViewToLayer( message : AddViewToLayer ) : void
 		{
@@ -42,12 +42,12 @@ package net.wooga.woong.controller.view {
 			layer.addChild( view );
 		}
 
-		private function addLayer(name : String) : void {
+		private function addLayer( name : String ) : void
+		{
 			var layer : Sprite = new Sprite();
 			layer.name = name;
 			viewRoot.addChild( layer );
 			layers[ name ] = layer;
 		}
-		
 	}
 }

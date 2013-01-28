@@ -1,6 +1,7 @@
 package net.wooga.woong.model
 {
 	import flash.utils.Dictionary;
+
 	/**
 	 * ...
 	 * @author
@@ -9,7 +10,5 @@ package net.wooga.woong.model
 	{
 		public var _stoneIndexMap : Dictionary = new Dictionary();
 		public var _stoneGridMap : Dictionary = new Dictionary();
-		
 	}
-
 }

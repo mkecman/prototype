@@ -10,23 +10,19 @@ package net.wooga.woong.controller.core
 	import net.wooga.woong.view.levelmenu.message.LevelMenuViewControl;
 	import net.wooga.woong.view.mainmenu.message.MainMenuViewControl;
 	import net.wooga.woong.view.mainmenu.message.OpenMainMenuView;
-	
+
 	public class CoreController extends AbstractController
 	{
-		
-		
 		[MessageHandler]
 		public function handleInitializeCore( message : InitializeCore ) : void
 		{
 			dispatch( new InitializeView() );
-			
+
 			dispatch( new BackgroundViewControl( ViewControl.OPEN ) );
 			dispatch( new MainMenuViewControl( ViewControl.OPEN ) );
 			dispatch( new OpenMainMenuView( GameplayViewControl, ViewControl.OPEN ) );
 			dispatch( new OpenMainMenuView( GridEditorViewControl, ViewControl.OPEN ) );
-			//dispatch( new OpenMainMenuView( LevelMenuViewControl, ViewControl.OPEN ) );
+			// dispatch( new OpenMainMenuView( LevelMenuViewControl, ViewControl.OPEN ) );
 		}
-		
 	}
-
 }

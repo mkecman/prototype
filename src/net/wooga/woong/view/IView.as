@@ -1,17 +1,17 @@
-package net.wooga.woong.view 
+package net.wooga.woong.view
 {
-	
 	/**
 	 * ...
 	 * @author 
 	 */
-	public interface IView 
+	public interface IView
 	{
 		function setup( mediator : IMediator ) : void;
+
 		function open() : void;
+
 		function close() : void;
+
 		function get isOpen() : Boolean;
-	
 	}
-	
 }

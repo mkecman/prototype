@@ -1,4 +1,5 @@
-package net.wooga.woong.view.editor {
+package net.wooga.woong.view.editor
+{
 	import net.wooga.woong.constants.GridInfo;
 	import net.wooga.woong.event.StoneEvent;
 	import net.wooga.woong.event.WoongEvent;
@@ -8,7 +9,7 @@ package net.wooga.woong.view.editor {
 
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
+
 	/**
 	 * ...
 	 * @author
@@ -16,21 +17,20 @@ package net.wooga.woong.view.editor {
 	public class Toolbar extends Sprite
 	{
 		private var _selectedStone : Stone;
-		
+
 		public function Toolbar()
 		{
 			drawButtons();
 			drawExport();
-			
+
 			_selectedStone = getChildAt( 0 ) as Stone;
 			_selectedStone.setHighlight( true );
 		}
-		
-		private function drawButtons():void
+
+		private function drawButtons() : void
 		{
 			for ( var index : int = 0; index <= GridInfo.TYPE_PLACEHOLDER; index++ )
 			{
-				
 				var stone : Stone = new Stone();
 				stone.setup( index, index, 0, 0, 0 );
 				stone.x = Math.floor( index / 5 ) * GridInfo.STONE_WIDTH;
@@ -39,22 +39,21 @@ package net.wooga.woong.view.editor {
 				stone.addEventListener( StoneEvent.CLICK, onStoneClick );
 				stone.enabled = true;
 			}
-				
 		}
-		
-		private function drawExport():void
+
+		private function drawExport() : void
 		{
 			var button : ButtonExport = new ButtonExport();
 			button.addEventListener( MouseEvent.CLICK, handleExportClick );
 			addChild( button );
 			button.y = 7 * GridInfo.STONE_HEIGHT;
-			
+
 			var buttonOpen : ButtonOpenInGameplay = new ButtonOpenInGameplay();
 			buttonOpen.addEventListener( MouseEvent.CLICK, handleOpenClick );
 			addChild( buttonOpen );
 			buttonOpen.y = 8 * GridInfo.STONE_HEIGHT;
 		}
-		
+
 		private function onStoneClick( e : StoneEvent ) : void
 		{
 			selectedStone.setHighlight( false );
@@ -68,27 +67,25 @@ package net.wooga.woong.view.editor {
 				}
 			}
 		}
-		
-		private function handleExportClick(e:MouseEvent):void
+
+		private function handleExportClick( e : MouseEvent ) : void
 		{
 			dispatchEvent( new WoongEvent( WoongEvent.EXPORT ) );
 		}
-		
-		private function handleOpenClick(e:MouseEvent):void
+
+		private function handleOpenClick( e : MouseEvent ) : void
 		{
 			dispatchEvent( new WoongEvent( WoongEvent.OPEN ) );
 		}
-		
-		public function get selectedStone():Stone
+
+		public function get selectedStone() : Stone
 		{
 			return _selectedStone;
 		}
-		
-		public function set selectedStone(value:Stone):void
+
+		public function set selectedStone( value : Stone ) : void
 		{
 			_selectedStone = value;
 		}
-		
 	}
-
 }

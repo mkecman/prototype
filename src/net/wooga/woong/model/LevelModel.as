@@ -1,24 +1,24 @@
-package net.wooga.woong.model 
+package net.wooga.woong.model
 {
 	/**
 	 * ...
 	 * @author 
 	 */
-	public class LevelModel 
+	public class LevelModel
 	{
 		public var levels : Vector.<Level>;
 		public var currentLevel : Level;
-		
-		public function LevelModel() 
+
+		public function LevelModel()
 		{
 			levels = new Vector.<Level>();
 		}
-		
+
 		public function addLevel( id : int, xml : XML ) : void
 		{
 			levels.push( new Level( id, xml ) );
 		}
-		
+
 		public function getLevel( id : int ) : Level
 		{
 			var result : Level;
@@ -32,11 +32,9 @@ package net.wooga.woong.model
 					break;
 				}
 			}
-			
+
 			currentLevel = result;
 			return result;
 		}
-		
 	}
-
 }

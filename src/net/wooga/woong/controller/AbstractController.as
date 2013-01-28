@@ -1,15 +1,12 @@
-package net.wooga.woong.controller 
+package net.wooga.woong.controller
 {
 	/**
 	 * ...
 	 * @author ...
 	 */
-	public class AbstractController 
+	public class AbstractController
 	{
 		[MessageDispatcher]
 		public var dispatch : Function;
-		
-		
 	}
-
 }
