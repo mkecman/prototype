@@ -1,5 +1,9 @@
 package net.wooga.woong.view.gameplay
 {
+	import net.wooga.woong.graphic.GameplayGraphic;
+	import net.wooga.woong.message.view.ViewControl;
+	import net.wooga.woong.view.levelmenu.message.LevelMenuViewControl;
+	import net.wooga.woong.graphic.EndRoundGraphic;
 	import flash.display.StageQuality;
 	import flash.geom.Rectangle;
 	import flash.display.Sprite;
@@ -27,8 +31,9 @@ package net.wooga.woong.view.gameplay
 	 */
 	public class GameplayView extends AbstractView
 	{
+		private const TIME : int = 60;
 		private var _stoneModel : StoneModel;
-		private var _graphic : Sprite;
+		private var _graphic : GameplayGraphic;
 		private var _matchHelper : MatcherHelper;
 		private var _firstStoneIndex : int = -1;
 		private var _secondStoneIndex : int = -1;
@@ -38,12 +43,16 @@ package net.wooga.woong.view.gameplay
 		private var _startButton : StartButton;
 		private var _roundTimer : Timer;
 		private var _gridRenderer : GridRenderer;
+		private var _endRoundGraphic : EndRoundGraphic;
+		private var _mediator : GameplayMediator;
+		private var _currentXML : XML;
 
 		override public function setup( mediator : IMediator ) : void
 		{
 			super.setup( mediator );
+			_mediator = mediator as GameplayMediator;
 
-			_graphic = new Sprite();
+			_graphic = new GameplayGraphic();
 			addChild( _graphic );
 
 			_matchHelper = new MatcherHelper();
@@ -51,26 +60,34 @@ package net.wooga.woong.view.gameplay
 			_gridRenderer.addEventListener( StoneEvent.CLICK, onStoneClick );
 			_gridRenderer.addEventListener( StoneEvent.ROLL_OVER, onStoneRollOver );
 			_graphic.addChild( _gridRenderer );
+			_gridRenderer.x = 60;
+			_gridRenderer.y = 130;
 			
 			_stoneModel = new StoneModel();
 			_gridRenderer.setup( _stoneModel );
 			
-			foundLabel = new TextField();
+			foundLabel = _graphic.score;
 			addChild( foundLabel );
-			foundLabel.htmlText = "FOUND : 0";
-			foundLabel.y = 20;
-			foundLabel.height = foundLabel.textHeight + 5;
+			foundLabel.htmlText = "SCORE:";
 
-			timeLabel = new TextField();
+			timeLabel = _graphic.time;
 			addChild( timeLabel );
-			timeLabel.x = GridInfo.WIDTH * GridInfo.STONE_WIDTH - 50;
-			timeLabel.y = 20;
-			timeLabel.htmlText = "TIME : 0";
-			timeLabel.height = timeLabel.textHeight + 5;
+			timeLabel.htmlText = TIME.toString();
+			_graphic.timeBar.gotoAndStop(1);
 
 			_startButton = new StartButton();
 			_startButton.addEventListener( MouseEvent.CLICK, onStartClick );
 			addChild( _startButton );
+			
+			_endRoundGraphic = new EndRoundGraphic();
+			_endRoundGraphic.againButton.addEventListener( MouseEvent.CLICK, onAgainClick );
+			_endRoundGraphic.againButton.buttonMode = true;
+			_endRoundGraphic.againButton.useHandCursor = true;
+			_endRoundGraphic.nextButton.addEventListener( MouseEvent.CLICK, onEndRoundClick );
+			_endRoundGraphic.nextButton.buttonMode = true;
+			_endRoundGraphic.nextButton.useHandCursor = true;
+			addChild( _endRoundGraphic );
+			_endRoundGraphic.visible = false;
 
 			_roundTimer = new Timer( 1000 );
 			_roundTimer.addEventListener( TimerEvent.TIMER, onRoundTimerTick );
@@ -78,7 +95,9 @@ package net.wooga.woong.view.gameplay
 
 		public function loadLevel( xml : XML ) : void
 		{
+			_currentXML = xml;
 			stage.quality = StageQuality.MEDIUM;
+			_endRoundGraphic.visible = false;
 			resetRound();
 			_gridRenderer.removeStones();
 			_gridRenderer.loadLevel( xml );
@@ -125,6 +144,30 @@ package net.wooga.woong.view.gameplay
 						break;
 				}
 			}
+			
+			checkValidMoves();
+		}
+
+		private function checkValidMoves() : void
+		{
+			var matchesFound : uint = 0;
+			for each ( var currentStone : Stone in _stoneModel._stoneIndexMap )
+			{
+				if ( currentStone.enabled && currentStone.visible && isStoneFree( currentStone.index ) )
+				{
+					for each ( var stone : Stone in _stoneModel._stoneIndexMap )
+					{
+						if ( stone != currentStone && stone.enabled && stone.visible && isStoneFree( stone.index ) )
+						{
+							if ( stone.type == currentStone.type )
+								matchesFound++;
+						}
+					}
+				}
+			}
+			
+			if ( matchesFound == 0 )
+				endRound( "NO MORE VALID MOVES!" );
 		}
 
 		private function handleMatchNotFound() : void
@@ -142,7 +185,7 @@ package net.wooga.woong.view.gameplay
 		private function handleMatchFound() : void
 		{
 			_foundMatches++;
-			foundLabel.htmlText = "FOUND : " + _foundMatches;
+			foundLabel.htmlText = "SCORE:" + _foundMatches;
 
 			removeStone( _firstStoneIndex );
 			removeStone( _secondStoneIndex );
@@ -158,7 +201,9 @@ package net.wooga.woong.view.gameplay
 		private function resetRound() : void
 		{
 			_foundMatches = 0;
-			foundLabel.htmlText = "FOUND : " + _foundMatches;
+			foundLabel.htmlText = "SCORE:" + _foundMatches;
+			timeLabel.htmlText = TIME.toString();
+			_graphic.timeBar.gotoAndStop( TIME );
 
 			resetSelectedStones();
 			_matchHelper.reset();
@@ -177,6 +222,29 @@ package net.wooga.woong.view.gameplay
 			_firstStoneIndex = -1;
 			_secondStoneIndex = -1;
 		}
+		
+		private function endRound( type : String ) : void
+		{
+			_roundTimer.stop();
+			_endRoundGraphic.description.htmlText = type;
+			_endRoundGraphic.visible = true;
+		}
+		
+		private function onEndRoundClick( event : MouseEvent ) : void
+		{
+			_mediator.requestView( LevelMenuViewControl, ViewControl.OPEN );
+			
+			_endRoundGraphic.visible = false;
+			timeLabel.text = TIME.toString();
+		}
+		
+		private function onAgainClick( event : MouseEvent ) : void
+		{
+			loadLevel( _currentXML );
+		}
+		
+		
+		
 
 		private function onStoneRollOver( e : StoneEvent ) : void
 		{
@@ -233,7 +301,14 @@ package net.wooga.woong.view.gameplay
 
 		private function onRoundTimerTick( e : TimerEvent ) : void
 		{
-			timeLabel.text = "TIME: " + _roundTimer.currentCount;
+			var remainingTime : int = TIME - _roundTimer.currentCount;
+			timeLabel.text = remainingTime.toString();
+			_graphic.timeBar.gotoAndStop( remainingTime );
+			
+			if ( _roundTimer.currentCount == TIME )
+			{
+				endRound( "Time's Up!" );
+			}
 		}
 	}
 }

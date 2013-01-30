@@ -3,8 +3,8 @@ package net.wooga.woong.view.gameplay
 	import net.wooga.woong.message.level.LevelLoaded;
 	import net.wooga.woong.message.level.PlayLevel;
 	import net.wooga.woong.message.view.ViewControl;
-	import net.wooga.woong.model.StoneModel;
 	import net.wooga.woong.view.AbstractMediator;
+	import net.wooga.woong.view.mainmenu.message.OpenMainMenuView;
 
 	/**
 	 * ...
@@ -35,6 +35,11 @@ package net.wooga.woong.view.gameplay
 		public function handleLoadLevel( message : PlayLevel ) : void
 		{
 			view.loadLevel( message.xml );
+		}
+		
+		internal function requestView( viewControl : Class, action : String ) : void
+		{
+			dispatch( new OpenMainMenuView( viewControl, action ) );
 		}
 	}
 }

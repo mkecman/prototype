@@ -12,6 +12,7 @@ package net.wooga.woong.core
 	import net.wooga.woong.view.editor.GridEditorMediator;
 	import net.wooga.woong.view.gameplay.GameplayMediator;
 	import net.wooga.woong.view.levelmenu.LevelMenuMediator;
+	import net.wooga.woong.view.mainmenu.MainMenuMediator;
 
 	public class WoongContext
 	{
@@ -27,5 +28,6 @@ package net.wooga.woong.core
 		public var gridEditorMediator : GridEditorMediator = new GridEditorMediator();
 		public var levelMediator : LevelMenuMediator = new LevelMenuMediator();
 		public var backgroundMediator : BackgroundMediator = new BackgroundMediator();
+		public var mainMenuMediator : MainMenuMediator = new MainMenuMediator();
 	}
 }

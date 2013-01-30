@@ -38,8 +38,6 @@ package net.wooga.woong.view.gameplay.grid
 				addLayer( GridInfo.LAYER_TWO );
 				addLayer( GridInfo.LAYER_THREE );
 				addLayer( GridInfo.LAYER_FOUR );
-
-				_graphic.y = 50;
 			}
 		}
 

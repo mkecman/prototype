@@ -30,6 +30,15 @@ package net.wooga.woong.view.mainmenu
 			_graphic.gameplayButton.addEventListener( MouseEvent.CLICK, onGameplayClick );
 			_graphic.editorButton.addEventListener( MouseEvent.CLICK, onEditorClick );
 			_graphic.levelsButton.addEventListener( MouseEvent.CLICK, onLevelsClick );
+			_graphic.playButton.addEventListener( MouseEvent.CLICK, onPlayClick );
+			_graphic.playButton.mouseChildren = false;
+			_graphic.playButton.buttonMode = true;
+			_graphic.playButton.useHandCursor = true;
+		}
+
+		private function onPlayClick( event : MouseEvent ) : void
+		{
+			_mediator.requestView( LevelMenuViewControl, ViewControl.OPEN );
 		}
 
 		private function onEditorClick( event : MouseEvent ) : void

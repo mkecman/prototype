@@ -1,4 +1,4 @@
-package net.wooga.woong.view.levelmenu
+﻿package net.wooga.woong.view.levelmenu
 {
 	import flash.events.MouseEvent;
 
@@ -22,9 +22,10 @@ package net.wooga.woong.view.levelmenu
 			_graphic = new LevelMenuGraphic();
 			addChild( _graphic );
 
-			for ( var index : uint = 1; index <= 12; index++ )
+			for ( var index : uint = 1; index <= 7; index++ )
 			{
 				_graphic[ "level" + index ].addEventListener( MouseEvent.CLICK, onLevelClick );
+				_graphic[ "level" + index ].label.htmlText = index.toString();
 			}
 		}
 

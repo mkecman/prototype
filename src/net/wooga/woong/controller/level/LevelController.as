@@ -8,7 +8,7 @@ package net.wooga.woong.controller.level
 	import net.wooga.woong.message.view.ViewControl;
 	import net.wooga.woong.model.Level;
 	import net.wooga.woong.model.LevelModel;
-	import net.wooga.woong.view.editor.message.GridEditorViewControl;
+	import net.wooga.woong.view.gameplay.message.GameplayViewControl;
 	import net.wooga.woong.view.mainmenu.message.OpenMainMenuView;
 
 	/**
@@ -32,7 +32,7 @@ package net.wooga.woong.controller.level
 			if ( level )
 			{
 				dispatch( new LevelLoaded( level.xml ) );
-				dispatch( new OpenMainMenuView( GridEditorViewControl, ViewControl.OPEN ) );
+				dispatch( new OpenMainMenuView( GameplayViewControl, ViewControl.OPEN ) );
 			}
 			else
 			{

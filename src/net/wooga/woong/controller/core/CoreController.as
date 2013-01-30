@@ -19,10 +19,9 @@ package net.wooga.woong.controller.core
 			dispatch( new InitializeView() );
 
 			dispatch( new BackgroundViewControl( ViewControl.OPEN ) );
-			dispatch( new MainMenuViewControl( ViewControl.OPEN ) );
 			dispatch( new OpenMainMenuView( GameplayViewControl, ViewControl.OPEN ) );
 			dispatch( new OpenMainMenuView( GridEditorViewControl, ViewControl.OPEN ) );
-			// dispatch( new OpenMainMenuView( LevelMenuViewControl, ViewControl.OPEN ) );
+			dispatch( new OpenMainMenuView( MainMenuViewControl, ViewControl.OPEN ) );
 		}
 	}
 }

@@ -17,5 +17,6 @@ package net.wooga.woong.view.mainmenu
 		{
 			dispatch( new OpenMainMenuView( viewControl, action ) );
 		}
+		
 	}
 }
